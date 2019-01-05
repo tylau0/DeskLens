@@ -1,19 +1,26 @@
 import tkinter as tk
 import tkinter.scrolledtext as tkst
-#from googletrans import Translator
-from mstrans import Translator
+
 import numpy as np
 import cv2
 import PIL
 from PIL import ImageGrab as ig
-####from mscv import OCRDevice
-from tesseractcv import OCRDevice
+
 import time
 import threading
 import tempfile
 import os, io
 
-VERSION = "0.4"
+# Select your OCRDevice below:
+from gcv import OCRDevice
+####from mscv import OCRDevice
+####from tesseractcv import OCRDevice
+
+# Select your translator below:
+from googletrans import Translator
+####from mstrans import Translator
+
+VERSION = "0.5"
 DEBUG = True
 
 MINWAIT = 3000
@@ -41,8 +48,6 @@ class DeskLens(tk.Frame):
         
         self.langLabelFrame = tk.LabelFrame(self, text="Input and output languages")
         self.fromPrompt = tk.Label(self.langLabelFrame, text="from")
-        ####self.fromItem = tk.StringVar(self, value='jpn')
-        ####self.fromOptionMenu = tk.OptionMenu(self.langLabelFrame, self.fromItem, 'jpn', 'chi_tra', 'eng')
         self.fromItem = tk.StringVar(self, value='ja')
         self.fromOptionMenu = tk.OptionMenu(self.langLabelFrame, self.fromItem, 'en', 'zh-tw', 'ja')
         self.toPrompt = tk.Label(self.langLabelFrame, text="to")
@@ -89,7 +94,6 @@ class DeskLens(tk.Frame):
         self.translationLabelFrame.pack(side="top", fill="x", padx=10, pady=10, expand=True)
         
         self.statusLabel.pack(side="bottom", fill="x")
-
         
     def showCapToggle(self):
         if self.showCapButton.config('text')[-1] == 'Preview':
@@ -193,7 +197,7 @@ class DeskLens(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("DeskLens: Real-time screen text scanner and translator v" + VERSION)
+    root.title("DeskLens: Real-time desktop text scanner and translator v" + VERSION)
     root.geometry('600x600')
     frame = DeskLens(root)
     frame.pack(fill="both", expand=True)
